@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad Share - Creează și partajează note</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">
+                    <i class="fas fa-sticky-note"></i>
+                    Notepad Share
+                </h1>
+                <p class="tagline">Creează, formatează și partajează note instant</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="editor-container">
+                <div class="toolbar">
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-command="bold" title="Bold">
+                            <i class="fas fa-bold"></i>
+                        </button>
+                        <button class="toolbar-btn" data-command="italic" title="Italic">
+                            <i class="fas fa-italic"></i>
+                        </button>
+                        <button class="toolbar-btn" data-command="underline" title="Underline">
+                            <i class="fas fa-underline"></i>
+                        </button>
+                        <button class="toolbar-btn" data-command="strikeThrough" title="Strikethrough">
+                            <i class="fas fa-strikethrough"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-group">
+                        <select class="font-family-select" id="fontFamily">
+                            <option value="Inter, sans-serif">Inter</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="Times New Roman, serif">Times New Roman</option>
+                            <option value="Courier New, monospace">Courier New</option>
+                            <option value="Comic Sans MS, cursive">Comic Sans MS</option>
+                        </select>
+                    </div>
+                    
+                    <div class="toolbar-group">
+                        <select class="font-size-select" id="fontSize">
+                            <option value="12px">12px</option>
+                            <option value="14px">14px</option>
+                            <option value="16px" selected>16px</option>
+                            <option value="18px">18px</option>
+                            <option value="20px">20px</option>
+                            <option value="24px">24px</option>
+                            <option value="28px">28px</option>
+                            <option value="32px">32px</option>
+                            <option value="36px">36px</option>
+                            <option value="48px">48px</option>
+                        </select>
+                    </div>
+                    
+                    <div class="toolbar-group">
+                        <input type="color" class="color-picker" id="textColor" value="#000000" title="Text Color">
+                        <input type="color" class="color-picker" id="bgColor" value="#ffffff" title="Background Color">
+                    </div>
+                    
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-command="insertOrderedList" title="Numbered List">
+                            <i class="fas fa-list-ol"></i>
+                        </button>
+                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
+                            <i class="fas fa-list-ul"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-command="justifyLeft" title="Align Left">
+                            <i class="fas fa-align-left"></i>
+                        </button>
+                        <button class="toolbar-btn" data-command="justifyCenter" title="Align Center">
+                            <i class="fas fa-align-center"></i>
+                        </button>
+                        <button class="toolbar-btn" data-command="justifyRight" title="Align Right">
+                            <i class="fas fa-align-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" data-command="removeFormat" title="Clear Formatting">
+                            <i class="fas fa-remove-format"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="editor-wrapper">
+                    <div id="editor" class="editor" contenteditable="true" data-placeholder="Scrie aici..."></div>
+                </div>
+            </div>
+
+            <div class="actions-panel">
+                <div class="custom-link-section">
+                    <label for="customExtension" class="custom-link-label">
+                        <i class="fas fa-link"></i>
+                        Extensie personalizată (opțional)
+                    </label>
+                    <div class="custom-link-input-group">
+                        <span class="url-prefix">notepad.pw/</span>
+                        <input type="text" id="customExtension" placeholder="extensie-taală" class="custom-link-input">
+                        <button id="checkExtension" class="check-btn" title="Verifică disponibilitatea">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                    <div id="extensionStatus" class="extension-status"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="saveNote" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Salvează și Generează Link
+                    </button>
+                    <button id="clearNote" class="btn btn-secondary">
+                        <i class="fas fa-trash"></i>
+                        Șterge Tot
+                    </button>
+                </div>
+
+                <div id="shareSection" class="share-section hidden">
+                    <div class="share-header">
+                        <i class="fas fa-share-alt"></i>
+                        Link-ul tău este gata!
+                    </div>
+                    <div class="share-content">
+                        <div class="link-display">
+                            <input type="text" id="shareLink" readonly class="link-input">
+                            <button id="copyLink" class="copy-btn" title="Copiază link-ul">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="share-actions">
+                            <button id="openLink" class="btn btn-outline">
+                                <i class="fas fa-external-link-alt"></i>
+                                Deschide Link-ul
+                            </button>
+                            <button id="newNote" class="btn btn-outline">
+                                <i class="fas fa-plus"></i>
+                                Notă Nouă
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Notepad Share - Partajează ideile tale instant</p>
+        </footer>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Se salvează...</p>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
